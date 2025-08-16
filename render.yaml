@@ -1,12 +1,10 @@
-
 services:
   - type: web
     name: trader-nightmare-backend
-runtime: docker
+    env: docker
     dockerfilePath: ./backend/Dockerfile
-        dockerContext: ./backend
+    dockerContext: ./backend
     envVars:
-        
       - key: SECRET_KEY
         generateValue: true
       - key: DATABASE_URL
@@ -27,12 +25,12 @@ runtime: docker
         value: 0.25
       - key: MAX_CONCURRENT_POSITIONS
         value: 5
-    
+
   - type: web
     name: trader-nightmare-frontend
-    runtimev: docker
+    env: docker
     dockerfilePath: ./frontend/Dockerfile
-        dockerContext: ./frontend
+    dockerContext: ./frontend
     envVars:
       - key: VITE_API_URL
         fromService:
