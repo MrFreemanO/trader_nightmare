@@ -1,9 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Button } from '@/components/ui/button'
-import { RefreshCw } from 'lucide-react'
-import { PnLChart } from './charts/PnLChart'
+import { PnLChart } from './PnLChart'
 import { PerformanceMetrics } from './PerformanceMetrics'
 
 export function Analytics() {
@@ -51,7 +47,7 @@ export function Analytics() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
-        <RefreshCw className="h-8 w-8 animate-spin text-muted-foreground" />
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
       </div>
     )
   }
@@ -68,58 +64,66 @@ export function Analytics() {
         </div>
         
         <div className="flex items-center space-x-2">
-          <Tabs value={selectedPeriod} onValueChange={setSelectedPeriod}>
-            <TabsList>
-              {periods.map((period) => (
-                <TabsTrigger key={period.value} value={period.value}>
-                  {period.label}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
+          <div className="flex rounded-lg bg-gray-100 p-1">
+            {periods.map((period) => (
+              <button
+                key={period.value}
+                onClick={() => setSelectedPeriod(period.value)}
+                className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                  selectedPeriod === period.value
+                    ? 'bg-white text-blue-600 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                {period.label}
+              </button>
+            ))}
+          </div>
           
-          <Button onClick={fetchAnalyticsData} variant="outline">
-            <RefreshCw className="h-4 w-4 mr-2" />
-            Refresh
-          </Button>
+          <button
+            onClick={fetchAnalyticsData}
+            className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            🔄 Refresh
+          </button>
         </div>
       </div>
 
       {/* P&L Chart */}
-      <Card>
-        <CardHeader>
-          <CardTitle>P&L Performance ({selectedPeriod})</CardTitle>
-          <CardDescription>
+      <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
+        <div className="p-6 border-b border-gray-200">
+          <h3 className="text-lg font-semibold text-gray-900">P&L Performance ({selectedPeriod})</h3>
+          <p className="text-sm text-gray-600">
             Cumulative profit and loss over the selected period
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+          </p>
+        </div>
+        <div className="p-6">
           <PnLChart data={pnlChartData} />
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Performance Metrics */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Performance Metrics</CardTitle>
-          <CardDescription>
+      <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
+        <div className="p-6 border-b border-gray-200">
+          <h3 className="text-lg font-semibold text-gray-900">Performance Metrics</h3>
+          <p className="text-sm text-gray-600">
             Comprehensive trading performance statistics for {selectedPeriod}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+          </p>
+        </div>
+        <div className="p-6">
           <PerformanceMetrics data={performanceData} />
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Token Performance */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Token Performance</CardTitle>
-          <CardDescription>
+      <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
+        <div className="p-6 border-b border-gray-200">
+          <h3 className="text-lg font-semibold text-gray-900">Token Performance</h3>
+          <p className="text-sm text-gray-600">
             Performance breakdown by individual tokens
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+          </p>
+        </div>
+        <div className="p-6">
           {tokenPerformance.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
               No token performance data available
@@ -165,8 +169,8 @@ export function Analytics() {
               ))}
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   )
 }
