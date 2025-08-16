@@ -1,0 +1,38 @@
+
+services:
+  - type: web
+    name: trader-nightmare-backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        value: sqlite:///app.db
+      - key: DEBUG
+        value: false
+      - key: LOG_LEVEL
+        value: INFO
+      - key: VIABILITY_THRESHOLD
+        value: 70.0
+      - key: MAX_POSITION_SIZE
+        value: 1000.0
+      - key: SLIPPAGE_TOLERANCE
+        value: 0.02
+      - key: STOP_LOSS_PERCENTAGE
+        value: 0.15
+      - key: TAKE_PROFIT_PERCENTAGE
+        value: 0.25
+      - key: MAX_CONCURRENT_POSITIONS
+        value: 5
+    
+  - type: web
+    name: trader-nightmare-frontend
+    env: docker
+    dockerfilePath: ./frontend/Dockerfile
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: trader-nightmare-backend
+          property: host

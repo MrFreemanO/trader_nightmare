@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  trading-bot:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=sqlite:///app.db
+      - DEBUG=false
+      - LOG_LEVEL=INFO
+      - VIABILITY_THRESHOLD=70.0
+      - MAX_POSITION_SIZE=1000.0
+      - SLIPPAGE_TOLERANCE=0.02
+      - STOP_LOSS_PERCENTAGE=0.15
+      - TAKE_PROFIT_PERCENTAGE=0.25
+      - MAX_CONCURRENT_POSITIONS=5
+    volumes:
+      - ./logs:/var/log/trading-bot
+      - ./data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/trading/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  logs:
+  data:
+
