@@ -1,4 +1,4 @@
-// frontend/src/components/ui/Card.jsx
+//components/ui/Card.jsx
 export function Card({ className = '', ...props }) {
   return <div className={`rounded-lg border bg-white/5 shadow ${className}`} {...props} />
 }
