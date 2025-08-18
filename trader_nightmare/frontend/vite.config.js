@@ -1,4 +1,3 @@
-
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
@@ -19,11 +18,10 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: false,
     rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          charts: ['recharts']
-        }
+      onwarn(warning, warn) {
+        // Игнорируем INVALID_RESOLVED_ID, вместо падения
+        if (warning.code === 'INVALID_RESOLVED_ID') return
+        warn(warning)
       }
     }
   }
