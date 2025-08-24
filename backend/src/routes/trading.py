@@ -1,3 +1,4 @@
+# Updated by ChatGPT
 
 from flask import Blueprint, jsonify, request
 from src.models.user import db, TradingPosition, TradeHistory
