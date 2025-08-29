@@ -1,20 +1,21 @@
 import React from 'react';
 
-export function Switch({ checked, oncheckedchange, onchange, ...props }) {
-  const handlechange = (event) => {
-    if (oncheckedchange) {
-      oncheckedchange(event.target.checked);
+function SwitchComponent({ checked, ...props }) {
+  const handleChange = (event) => {
+    if (props.onCheckedChange) {
+      props.onCheckedChange(event.target.checked);
     }
-    if (onchange) {
-      onchange(event);
+    if (props.onChange) {
+      props.onChange(event);
     }
   };
   const inputProps = Object.assign({}, props, {
     type: 'checkbox',
     checked: checked,
-    onChange: handlechange,
+    onChange: handleChange,
   });
   return React.createElement('input', inputProps);
 }
 
-export default Switch;
+export const Switch = SwitchComponent;
+export default SwitchComponent;
