@@ -1,31 +1,27 @@
-// frontend/src/components/ui/Card.jsx
+import React from 'react';
 
-export function Card({ className = '', ...props }) {
-  return (
-    <div className={`rounded-lg border bg-white/5 shadow ${className}`} {...props} />
-  )
-}
+export const Card = ({ className = '', ...props }) => {
+  return React.createElement('div', { className: 'rounded-lg border bg-white shadow-sm ' + className, ...props });
+};
 
-export function CardHeader({ className = '', ...props }) {
-  return (
-    <div className={`p-4 border-b ${className}`} {...props} />
-  )
-}
+export const CardHeader = ({ className = '', ...props }) => {
+  return React.createElement('div', { className: 'flex flex-col space-y-1.5 p-6 ' + className, ...props });
+};
 
-export function CardTitle({ className = '', ...props }) {
-  return (
-    <h3 className={`text-lg font-semibold ${className}`} {...props} />
-  )
-}
+export const CardTitle = ({ className = '', ...props }) => {
+  return React.createElement('h3', { className: 'text-lg font-semibold leading-none tracking-tight ' + className, ...props });
+};
 
-export function CardContent({ className = '', ...props }) {
-  return (
-    <div className={`p-4 ${className}`} {...props} />
-  )
-}
+export const CardDescription = ({ className = '', ...props }) => {
+  return React.createElement('p', { className: 'text-sm text-muted-foreground ' + className, ...props });
+};
 
-export function CardFooter({ className = '', ...props }) {
-  return (
-    <div className={`p-4 border-t ${className}`} {...props} />
-  )
-}
+export const CardContent = ({ className = '', ...props }) => {
+  return React.createElement('div', { className: 'p-6 pt-0 ' + className, ...props });
+};
+
+export const CardFooter = ({ className = '', ...props }) => {
+  return React.createElement('div', { className: 'flex items-center p-6 pt-0 ' + className, ...props });
+};
+
+export default Card;
