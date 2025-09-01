@@ -9,6 +9,8 @@ import { Settings } from './components/Settings'
 import { Signals } from './components/Signals'
 import './App.css'
 
+const apiBase = import.meta.env.VITE_API_URL
+
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [systemStatus, setSystemStatus] = useState(null)
@@ -25,7 +27,7 @@ function App() {
 
   const fetchSystemStatus = async () => {
     try {
-      const response = await fetch('/api/trading/status')
+      const response = await fetch(`${apiBase}/api/trading/status`)
       const data = await response.json()
       if (data.success) {
         setSystemStatus(data.data)
