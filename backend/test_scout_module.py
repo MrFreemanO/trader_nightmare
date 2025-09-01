@@ -9,11 +9,13 @@ from datetime import datetime
 import sys
 import os
 
-# Add the parent directory to the path to import our modules
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+# Add backend directory to path so we can import from src
+sys.path.append(os.path.dirname(__file__))
 
 from src.utils.error_handling import CircuitBreaker, handle_api_errors
-from enhanced_trading_system import EnhancedScoutModule, TokenData, TradeSignal, MockDataProvider
+from src.enhanced_trading_system import (
+    EnhancedScoutModule, TokenData, TradeSignal, MockDataProvider
+)
 
 class TestMockDataProvider(unittest.TestCase):
     """Test cases for MockDataProvider"""
