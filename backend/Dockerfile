@@ -3,6 +3,10 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
+# Default port configuration
+ARG PORT=5000
+ENV PORT=${PORT}
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     gcc \
@@ -25,11 +29,11 @@ USER app
 RUN mkdir -p logs data database
 
 # Expose port
-EXPOSE 5000
+EXPOSE ${PORT}
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:5000/api/trading/status || exit 1
+    CMD curl -f http://localhost:${PORT}/api/trading/status || exit 1
 
 # Start application with gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "4", "--timeout", "120", "main:app"]
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT} --workers 4 --timeout 120 main:app"]
