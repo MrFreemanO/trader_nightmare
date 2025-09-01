@@ -10,6 +10,8 @@ export default {
       colors: {
         background: '#0f172a',
         foreground: '#f8fafc',
+        border: 'var(--border)',
+        ring: 'var(--ring)',
         primary: {
           50: '#eff6ff',
           500: '#3b82f6',
