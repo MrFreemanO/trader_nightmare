@@ -14,9 +14,6 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: false,
     emptyOutDir: true,
-    rollupOptions: {
-      external: ['lucide-react'], // ✅ добавлено для устранения ошибки импорта
-    },
   },
   server: {
     host: '0.0.0.0',
