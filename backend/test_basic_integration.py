@@ -10,11 +10,11 @@ from datetime import datetime
 import sys
 import os
 
-# Add the parent directory to the path to import our modules
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+# Add backend directory to path so we can import from src
+sys.path.append(os.path.dirname(__file__))
 
-from enhanced_trading_system import (
-    EnhancedTradingSystem, EnhancedScoutModule, RealTimeExecutorModule, 
+from src.enhanced_trading_system import (
+    EnhancedTradingSystem, EnhancedScoutModule, RealTimeExecutorModule,
     MockDataProvider, TokenData, TradeSignal
 )
 
@@ -196,16 +196,15 @@ class TestBasicIntegration(unittest.TestCase):
         self.assertIsNotNone(self.executor)
         
         # Test that executor has required methods
-        self.assertTrue(hasattr(self.executor, 'start'))
-        self.assertTrue(hasattr(self.executor, 'stop'))
-    
+        self.assertTrue(hasattr(self.executor, 'execute_trade_with_monitoring'))
+
     def test_trading_system_initialization(self):
         """Test trading system initialization"""
         self.assertIsNotNone(self.trading_system)
-        
+
         # Test that system has required methods
-        self.assertTrue(hasattr(self.trading_system, 'start'))
-        self.assertTrue(hasattr(self.trading_system, 'stop'))
+        self.assertTrue(hasattr(self.trading_system, 'start_system'))
+        self.assertTrue(hasattr(self.trading_system, 'stop_system'))
     
     def test_signal_generation_logic(self):
         """Test trade signal generation logic"""
