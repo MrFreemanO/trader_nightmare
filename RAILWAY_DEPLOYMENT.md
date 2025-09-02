@@ -52,6 +52,8 @@ The Vite configuration has been updated to support Railway deployment. The `allo
    ```
    ⚠️ **Important:** Replace `your-backend-url` with the actual Railway backend URL from step 1.
 
+   `VITE_API_URL` is baked into the frontend during the build. If you need to override the API URL at runtime, inject the value via Nginx or a separate configuration file.
+
 4. **Build and Deploy**
 
 ### 3. Alternative: Single Service Deployment

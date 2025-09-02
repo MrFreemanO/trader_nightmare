@@ -89,6 +89,8 @@ npm install
 npm run dev
 ```
 
+> **Note:** The frontend embeds the API endpoint at build time. Set `VITE_API_URL` in your environment when running `npm run build` or building the Docker image. If you need to change the API URL after build, inject a configuration via Nginx or provide a separate config file.
+
 ## 📊 Trading Features
 
 ### Token Analysis
