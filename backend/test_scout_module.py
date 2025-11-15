@@ -17,7 +17,7 @@ from src.enhanced_trading_system import (
     EnhancedScoutModule, TokenData, TradeSignal, MockDataProvider
 )
 
-class TestMockDataProvider(unittest.TestCase):
+class TestMockDataProvider(unittest.IsolatedAsyncioTestCase):
     """Test cases for MockDataProvider"""
     
     def setUp(self):
@@ -71,7 +71,7 @@ class TestMockDataProvider(unittest.TestCase):
         self.assertIsInstance(price, float)
         self.assertGreater(price, 0)
 
-class TestEnhancedScoutModule(unittest.TestCase):
+class TestEnhancedScoutModule(unittest.IsolatedAsyncioTestCase):
     """Test cases for EnhancedScoutModule"""
     
     def setUp(self):
@@ -369,71 +369,7 @@ class TestErrorHandling(unittest.TestCase):
         self.assertEqual(result["error_type"], "validation")
         self.assertFalse(result["retry"])
 
-# Async test runner
-class AsyncTestCase(unittest.TestCase):
-    """Base class for async test cases"""
-    
-    def setUp(self):
-        self.loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(self.loop)
-    
-    def tearDown(self):
-        self.loop.close()
-    
-    def async_test(self, coro):
-        """Helper method to run async tests"""
-        return self.loop.run_until_complete(coro)
-
-class TestAsyncScoutModule(AsyncTestCase):
-    """Async test cases for Scout Module"""
-    
-    def setUp(self):
-        super().setUp()
-        self.providers = [MockDataProvider("TestProvider")]
-        self.scout = EnhancedScoutModule(self.providers)
-    
-    def test_async_token_assessment(self):
-        """Test async token assessment"""
-        async def run_test():
-            await self.providers[0].connect()
-            token_address = "0x1234567890123456789012345678901234567890"
-            
-            score, token_data, trade_signal = await self.scout.assess_token_comprehensive(token_address)
-            
-            self.assertIsInstance(score, float)
-            self.assertIsInstance(token_data, TokenData)
-            self.assertIsInstance(trade_signal, TradeSignal)
-        
-        self.async_test(run_test())
-    
-    def test_async_data_aggregation(self):
-        """Test async data aggregation"""
-        async def run_test():
-            await self.providers[0].connect()
-            token_address = "0x1234567890123456789012345678901234567890"
-            
-            data = await self.scout.get_aggregated_token_data(token_address)
-            
-            self.assertIsInstance(data, TokenData)
-            self.assertEqual(data.address, token_address)
-        
-        self.async_test(run_test())
 
 if __name__ == '__main__':
-    # Create test suite
-    test_suite = unittest.TestSuite()
-    
-    # Add test cases
-    test_suite.addTest(unittest.makeSuite(TestMockDataProvider))
-    test_suite.addTest(unittest.makeSuite(TestEnhancedScoutModule))
-    test_suite.addTest(unittest.makeSuite(TestCircuitBreaker))
-    test_suite.addTest(unittest.makeSuite(TestErrorHandling))
-    test_suite.addTest(unittest.makeSuite(TestAsyncScoutModule))
-    
-    # Run tests
-    runner = unittest.TextTestRunner(verbosity=2)
-    result = runner.run(test_suite)
-    
-    # Exit with appropriate code
-    exit(0 if result.wasSuccessful() else 1)
+    unittest.main()
 

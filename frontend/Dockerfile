@@ -17,8 +17,8 @@ RUN npm run build -- --logLevel info
 # ---------- Production stage ----------
 FROM nginx:alpine
 
-# Install curl for healthchecks
-RUN apk add --no-cache curl
+# Install curl and wget for healthchecks
+RUN apk add --no-cache curl wget
 
 # Copy the built application
 COPY --from=builder /app/dist /usr/share/nginx/html
